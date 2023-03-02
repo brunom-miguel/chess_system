@@ -1,4 +1,4 @@
-package chess.boardgame;
+package chess_system.boardgame;
 
 public class Position {
     private int row;
@@ -7,6 +7,14 @@ public class Position {
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     public void setValues(int row, int column){}

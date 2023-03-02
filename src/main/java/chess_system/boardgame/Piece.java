@@ -1,6 +1,6 @@
-package chess.boardgame;
+package chess_system.boardgame;
 
-public class Piece {
+public class  Piece {
     protected Position position;
     private Board board;
 
