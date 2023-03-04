@@ -26,6 +26,13 @@ public class ChessMatch {
         return matriz;
     }
 
+    // método para que seja possível imprimir as posições possíveis a partir de uma posição de origem
+    public boolean[][] possibleMoves(ChessPosition originPosition) {
+        Position position = originPosition.toPosition(); // converte a posição de XADREZ, para uma posição de MATRIZ
+        this.validateOriginPosition(position);
+        return this.board.piece(position).possibleMoves();
+    }
+
     public ChessPiece performChessMove(ChessPosition positionOrigin, ChessPosition positionDestination) {
         Position origin = positionOrigin.toPosition();
         Position destination = positionDestination.toPosition();
