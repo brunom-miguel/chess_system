@@ -2,6 +2,7 @@ package chess_system.chess;
 
 import chess_system.boardgame.Board;
 import chess_system.boardgame.Piece;
+import chess_system.boardgame.Position;
 
 public abstract class ChessPiece extends Piece {
     private Color color;
@@ -14,6 +15,12 @@ public abstract class ChessPiece extends Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    // função declarada na classe genérica (e não nas peças em si) pq será reaproveitada em cada peça
+    protected boolean isThereOpponentPiece(Position position) {
+        ChessPiece piece = (ChessPiece) this.getBoard().piece(position);
+        return piece != null && piece.getColor() != this.color; // se true, então a peça é ADVERSÁRIA
     }
 
 }
