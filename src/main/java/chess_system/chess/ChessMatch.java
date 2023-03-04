@@ -10,10 +10,22 @@ public class ChessMatch {
     // vai ter as regras do jogo
 
     private Board board;
+    private int turn;
+    private Color currentPlayer;
 
     public ChessMatch() {
         board = new Board(8, 8);
+        turn = 1;
+        currentPlayer = Color.WHITE;
         initialSetup();
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public ChessPiece[][] getPieces() {
@@ -39,6 +51,7 @@ public class ChessMatch {
         validateOriginPosition(origin);
         validateDestinationPosition(origin, destination);
         Piece capturedPiece = makeMove(origin, destination);
+        nextTurn();
         return (ChessPiece) capturedPiece;
     }
 
@@ -53,6 +66,9 @@ public class ChessMatch {
         if (!board.isThereAPiece(position)) {
             throw new ChessException("There is no piece on origin position");
         }
+        if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()) { // método getColor é da classe mais específica, por isso o downcasting
+            throw new ChessException("The chosen piece is not yours");
+        }
         if (!board.piece(position).isThereAnyPossibleMove()) { // se não tiver nenhum movimento possível
             throw new ChessException("There is no possible moves for the chosen piece");
         }
@@ -64,7 +80,11 @@ public class ChessMatch {
             // valida se para a peça de ORIGEM, a posição de DESTINO não é um movimento possível, então não pode ir para lá
             throw new ChessException("The chosen pieces cannot move to destination position");
         }
+    }
 
+    private void nextTurn() {
+        turn++;
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece) {
