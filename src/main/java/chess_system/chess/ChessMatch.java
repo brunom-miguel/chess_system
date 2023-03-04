@@ -1,6 +1,8 @@
 package chess_system.chess;
 
 import chess_system.boardgame.Board;
+import chess_system.boardgame.Piece;
+import chess_system.boardgame.Position;
 import chess_system.chess.pieces.King;
 import chess_system.chess.pieces.Rook;
 
@@ -22,6 +24,27 @@ public class ChessMatch {
             }
         }
         return matriz;
+    }
+
+    public ChessPiece performChessMove(ChessPosition positionOrigin, ChessPosition positionDestination) {
+        Position origin = positionOrigin.toPosition();
+        Position destination = positionDestination.toPosition();
+        validateOriginPosition(origin);
+        Piece capturedPiece = makeMove(origin, destination);
+        return (ChessPiece) capturedPiece;
+    }
+
+    private Piece makeMove(Position origin, Position destination) {
+        Piece p = board.removePiece(origin);
+        Piece capturedPiece = board.removePiece(destination);
+        board.placePiece(p, destination);
+        return capturedPiece;
+    }
+
+    private void validateOriginPosition(Position position) {
+        if (!board.isThereAPiece(position)) {
+            throw new ChessException("There is no piece on origin position");
+        }
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece) {
