@@ -17,6 +17,10 @@ public abstract class ChessPiece extends Piece {
         return color;
     }
 
+    public ChessPosition getChessPosition() {
+        return ChessPosition.fromPosition(position);
+    }
+
     // função declarada na classe genérica (e não nas peças em si) pq será reaproveitada em cada peça
     protected boolean isThereOpponentPiece(Position position) {
         ChessPiece piece = (ChessPiece) this.getBoard().piece(position);
