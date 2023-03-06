@@ -87,7 +87,8 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position origin, Position destination) {
-        Piece p = board.removePiece(origin);
+        ChessPiece p = (ChessPiece) board.removePiece(origin);
+        p.increaseMoveCount();
         Piece capturedPiece = board.removePiece(destination);
         board.placePiece(p, destination);
 
@@ -101,7 +102,8 @@ public class ChessMatch {
 
     // desfaz a lógica do "makeMove"
     public void unMakeMove(Position origin, Position destination, Piece capturedPiece) {
-        Piece p = board.removePiece(destination);
+        ChessPiece p = (ChessPiece) board.removePiece(destination);
+        p.decreaseMoveCount();
         board.placePiece(p, origin);
 
         if (capturedPiece != null) {
